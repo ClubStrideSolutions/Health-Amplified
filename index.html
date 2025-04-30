@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Amplified – Youth Public Health Action Lab</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ===== Brand‑kit variables (April 2025) ===== */
+        :root {
+            --primary-color-dark: #000000;   /* pure black */
+            --primary-color-light: #ffffff;  /* pure white */
+            --accent-color: #2c57fa;         /* brand blue */
+            --accent-color-soft: rgba(44, 87, 250, 0.15);
+            --highlight-color: #fa962c;      /* brand orange */
+            --background-color: #f9f9f9;     /* light neutral */
+            --text-color: #222;
+            --card-color: #ffffff;
+            --shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --radius: 14px;
+        }
+
+        /* ==== RESET ==== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ==== BASE ==== */
+        body {
+            font-family: "Instrument Sans", sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            font-size: 16px;
+            line-height: 1.65;
+            background-image: radial-gradient(var(--accent-color-soft) 1px, transparent 1px);
+            background-size: 22px 22px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.25s;
+        }
+        a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* ==== UTILITIES ==== */
+        .container {
+            max-width: 1400px;
+            margin-inline: auto;
+            padding: 24px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ==== HEADER ==== */
+        header {
+            background: #000; /* solid black per brand */
+            color: #fff;
+            text-align: center;
+            padding: 3rem 2rem 4rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        header h2 {
+            font-size: 1.35rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--highlight-color);
+            padding: 0.6rem 1.4rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* ==== NAV ==== */
+        nav {
+            position: sticky;
+            top: 8px;
+            z-index: 90;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: 1.5rem 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            display: block;
+            padding: 0.9rem 1.4rem;
+            font-weight: 500;
+            color: var(--primary-color-dark);
+        }
+        nav a:hover {
+            background: var(--accent-color-soft);
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        /* ==== SECTIONS ==== */
+        section {
+            background: var(--card-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .section-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary-color-dark);
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: "";
+            width: 72px;
+            height: 3px;
+            background: var(--accent-color);
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+        }
+
+        /* ==== CARDS ==== */
+        .feature-card,
+        .week-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 1.4rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        .feature-card:hover,
+        .week-card:hover {
+            transform: translateY(-4px);
+        }
+        .feature-card h4,
+        .week-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color-dark);
+            margin-bottom: 0.7rem;
+        }
+        .feature-card ul {
+            list-style: "✔️  ";
+            padding-left: 1.2rem;
+        }
+        .feature-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ==== WEEK CARD SPECIFICS ==== */
+        .week-card h4 {
+            border-left: 4px solid var(--highlight-color);
+            padding-left: 0.5rem;
+        }
+        .week-card h5 {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            margin-bottom: 0.6rem;
+        }
+
+        /* ==== HIGHLIGHT & QUOTE BOXES ==== */
+        .highlight,
+        .quote {
+            border-left: 4px solid var(--accent-color);
+            background: var(--accent-color-soft);
+            padding: 1.3rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+        .quote {
+            border-color: var(--highlight-color);
+            background: rgba(250, 150, 44, 0.12);
+            font-style: italic;
+        }
+
+        /* ==== BENEFITS LIST ==== */
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.3rem;
+        }
+        .benefit-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--accent-color-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-right: 0.9rem;
+            flex-shrink: 0;
+        }
+        .benefit-content h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color-dark);
+        }
+
+        /* ==== CTA ==== */
+        .cta {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #000 100%);
+            color: #fff;
+            text-align: center;
+            padding: 2.4rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .cta h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta p {
+            max-width: 540px;
+            margin-inline: auto;
+            margin-bottom: 1.6rem;
+        }
+        .btn {
+            background: var(--highlight-color);
+            color: #fff;
+            padding: 0.75rem 2.1rem;
+            border: none;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-block;
+            transition: transform 0.3s;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ==== FOOTER ==== */
+        footer {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+        }
+        footer a {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== Header ===== -->
+        <header>
+            <h1>Health Amplified</h1>
+            <h2>Youth Public Health Action Lab</h2>
+            <p style="max-width: 680px; margin-inline: auto">
+                We back young changemakers who want to flip the script on community health and build fair systems for everyone.
+            </p>
+            <div class="badge">6‑Week Paid Summer Internship</div>
+        </header>
+
+        <!-- ===== Navigation ===== -->
+        <nav aria-label="Main">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#outcomes">Skills</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#voices">Stakeholders</a></li>
+                <li><a href="#apply">Apply!</a></li>
+            </ul>
+        </nav>
+
+        <!-- ===== OVERVIEW ===== -->
+        <section id="overview">
+            <h2 class="section-title">Why Health Amplified?</h2>
+            <p>
+                Because nobody understands youth health challenges better than, well…
+                <strong>youth</strong>. In six fast‑paced weeks you’ll team‑up, research what really matters, and pitch fixes to the adults who can make them happen.
+            </p>
+
+            <div class="highlight">
+                <h4>🚀 Quick Mission Brief</h4>
+                <p>
+                    Power up a peer‑education crew, run a youth‑led needs check, and rally schools + community partners to smash health gaps across Solano County.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="feature-card">
+                    <h4>🛠️ What You’ll Tackle</h4>
+                    <ul>
+                        <li>Boost on‑campus health pop‑ups & events</li>
+                        <li>Run listening sessions + surveys 🔍</li>
+                        <li>Dig into real‑world health data</li>
+                        <li>Create scroll‑stopping IG/TikTok health posts</li>
+                        <li>Co‑design solutions with pros & policymakers</li>
+                        <li>Pitch your ideas at a county‑level showcase</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>✨ Why It Rocks</h4>
+                    <ul>
+                        <li>Earn a stipend and resume‑ready creds</li>
+                        <li>Your ideas guide REAL policy moves</li>
+                        <li>Meet mentors & leaders across health fields</li>
+                        <li>Help friends & fam access better care</li>
+                        <li>Leave a blueprint future interns can build on</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quote">
+                “I signed up for the internship to get hours for college apps—ended up changing how my school talks about mental health.” – 2024 intern
+            </div>
+        </section>
+
+        <!-- ===== JOURNEY ===== -->
+        <section id="journey">
+            <h2 class="section-title">Your 6‑Week Adventure</h2>
+            <p>Level‑up week by week. Here’s the game plan:</p>
+            <div class="grid-3">
+                <div class="week-card">
+                    <h4>Week 1</h4>
+                    <h5>Systems Scavenger Hunt</h5>
+                    <p>Map every health resource (or gap) around your campus & city.</p>
+                </div>
+                <div class="week-card">
+                    <h4>Week 2</h4>
+                    <h5>Listening Toolkit</h5>
+                    <p>Build surveys, vox‑pop questions & interview skills that get honest answers.</p>
+                </div>
+                <div class="week-card">
+                    <h4>Week 3</h4>
+                    <h5>Campus Takeover</h5>
+                    <p>Host peer events + collect stories that matter.</p>
+                </div>
+                <div class="week-card">
+                    <h4>Week 4</h4>
+                    <h5>Data Detective</h5>
+                    <p>Turn raw feedback into clear trends & eye‑opening stats.</p>
+                </div>
+                <div class="week-card">
+                    <h4>Week 5</h4>
+                    <h5>Solution Sprint</h5>
+                    <p>Co‑design fresh ideas with experts & test them for fit.</p>
+                </div>
+                <div class="week-card">
+                    <h4>Week 6</h4>
+                    <h5>Big‑Stage Showcase</h5>
+                    <p>Pitch to school boards, clinics & county reps—secure commitments.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA BREAK ===== -->
+        <div class="cta">
+            <h3>Sound Like Your Vibe?</h3>
+            <p>Roll with a squad of motivated teens & create health‑equity wins we can all celebrate.</p>
+            <a href="#apply" class="btn">Jump to Application</a>
+        </div>
+
+        <!-- ===== SKILLS ===== -->
+        <section id="outcomes">
+            <h2 class="section-title">Skills You’ll Unlock</h2>
+            <!-- <p>Every intern earns digital badges you can drop on LinkedIn, college apps & resumés.</p> -->
+            <div class="grid-2">
+                <div>
+                    <div class="benefit-item"><div class="benefit-icon">🎤</div><div class="benefit-content"><h4>Advocacy Pro</h4><p>Guide friends to resources & speak up for change.</p></div></div>
+                    <div class="benefit-item"><div class="benefit-icon">📊</div><div class="benefit-content"><h4>Data Wrangler</h4><p>Collect, clean & decode stats that influence policy.</p></div></div>
+                    <div class="benefit-item"><div class="benefit-icon">🎯</div><div class="benefit-content"><h4>Equity Messenger</h4><p>Create social posts & campaigns that bust stigma.</p></div></div>
+                </div>
+                <div>
+                    <div class="benefit-item"><div class="benefit-icon">🤝</div><div class="benefit-content"><h4>Collab Builder</h4><p>Work with schools, clinics & nonprofits like a pro.</p></div></div>
+                    <div class="benefit-item"><div class="benefit-icon">🎙️</div><div class="benefit-content"><h4>Confident Speaker</h4><p>Level‑up public speaking & presentation swagger.</p></div></div>
+                    <div class="benefit-item"><div class="benefit-icon">⚙️</div><div class="benefit-content"><h4>System Hacker</h4><p>Spot leverage points & design lasting fixes.</p></div></div>
+                </div>
+            </div>
+            <div class="highlight"><h4>Career Ready</h4><p>Past interns now major in Public Health, Social Work, UX Research & more. You’re next!</p></div>
+        </section>
+
+        <!-- ===== IMPACT ===== -->
+        <section id="impact">
+            <h2 class="section-title">Impact You’ll Spark</h2>
+            <p>Your work lives on after the summer—here’s how:</p>
+            <div class="grid-2">
+                <div class="feature-card">
+                    <h4>📅 Day‑One Wins</h4>
+                    <ul>
+                        <li>Fresh peer‑ed events on campus</li>
+                        <li>Youth‑verified health data dashboard</li>
+                        <li>Buzz‑worthy social content for clinics & schools</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🏗️ Long Game</h4>
+                    <ul>
+                        <li>Blueprint for a permanent Youth Health Council</li>
+                        <li>Policy changes based on your research</li>
+                        <li>Stronger, louder youth voice county‑wide</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote">“Youth insights changed how we allocate county mental‑health funds.” – Solano County Health Official</div>
+        </section>
+
+        <!-- ===== STAKEHOLDERS ===== -->
+        <section id="voices" style="background: var(--accent-color-soft)">
+            <h2 class="section-title">Adults on Your Team</h2>
+            <p>We ❤️ co‑creation. Meet the stakeholders you’ll influence & learn from:</p>
+            <div class="grid-3">
+                <div class="feature-card"><h4>👩🏾‍⚕️ Health Pros</h4><p>Doctors, nurses & counselors ready to mentor & act on your findings.</p></div>
+                <div class="feature-card"><h4>🏫 School Leaders</h4><p>Principals & board members keen on student‑driven change.</p></div>
+                <div class="feature-card"><h4>🏛️ County Reps</h4><p>Policy makers who control budgets & love fresh ideas.</p></div>
+            </div>
+        </section>
+
+        <!-- ===== APPLY ===== -->
+        <section id="apply">
+            <h2 class="section-title">Apply – Summer 2025 Cohort</h2>
+            <div class="grid-2">
+                <div class="feature-card" style="text-align: center">
+                    <h4>🙋‍♀️ Who Should Apply?</h4>
+                    <ul style="text-align: left">
+                        <li>High‑schoolers (14‑18) in Solano County</li>
+                        <li>Especially Vallejo HS & MIT Academy students</li>
+                        <li>Curious minds into health, media, or social justice</li>
+                        <li>No prior experience needed – just passion!</li>
+                    </ul>
+                    <h4 style="margin-top: 1.4rem">📅 Key Info</h4>
+                    <ul style="text-align: left">
+                        <li><strong>Dates:</strong> May 19 – June 27, 2025</li>
+                        <li><strong>Hours:</strong> ~12 hrs/week (mix of in‑person + remote)</li>
+                        <li><strong>Location:</strong> Vallejo, CA + Zoom sessions</li>
+                        <li><strong>Stipend:</strong> $600</li>
+                        <li><strong>Deadline:</strong> Apr 15, 2025</li>
+                    </ul>
+                </div>
+                <div class="feature-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+                    <h4 style="margin-bottom: 1rem">🚀 Ready? Scan & Go!</h4>
+                    <img src="QR_Program_Code.png" alt="QR code linking to application" style="width: 180px; height: auto; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 1rem" />
+                    <p style="font-size: 0.9rem; margin-bottom: 1.2rem">Trouble scanning? Tap the button below.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvvC9W8GmxLLldwabopfaOjEhxvPn9EUXpWlmWZZzzwgqMsw/viewform?usp=dialog" class="btn" style="margin-bottom: 0.8rem">Apply Online</a>
+                    <p style="font-size: 0.8rem">Questions? <a href="mailto:info@clubstride.org">info@clubstride.org</a> | <a href="tel:+17075551234">707‑555‑1234</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer>
+            <p>© 2025 Health Amplified, a project of Club Stride Inc. – 501(c)(3) #80‑0662154</p>
+            <p><a href="https://clubstride.org">clubstride.org</a></p>
+        </footer>
+    </div>
+</body>
+</html>
